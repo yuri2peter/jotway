@@ -1,0 +1,26 @@
+diff --git a/node_modules/koa-body/node_modules/formidable/src/Formidable.js b/node_modules/koa-body/node_modules/formidable/src/Formidable.js
+index 0542700..deb9cef 100644
+--- a/node_modules/koa-body/node_modules/formidable/src/Formidable.js
++++ b/node_modules/koa-body/node_modules/formidable/src/Formidable.js
+@@ -88,11 +88,16 @@ class IncomingForm extends EventEmitter {
+       );
+     }
+ 
+-    this.options.enabledPlugins.forEach((pluginName) => {
+-      const plgName = pluginName.toLowerCase();
+-      // eslint-disable-next-line import/no-dynamic-require, global-require
+-      this.use(require(path.join(__dirname, 'plugins', `${plgName}.js`)));
+-    });
++    // this.options.enabledPlugins.forEach((pluginName) => {
++    //   const plgName = pluginName.toLowerCase();
++    //   // eslint-disable-next-line import/no-dynamic-require, global-require
++    //   this.use(require(path.join(__dirname, 'plugins', `${plgName}.js`)));
++    // });
++
++    this.use(require('./plugins/octetstream.js'));
++    this.use(require('./plugins/querystring.js'));
++    this.use(require('./plugins/multipart.js'));
++    this.use(require('./plugins/json.js'));
+ 
+     this._setUpMaxFields();
+   }

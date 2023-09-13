@@ -1,0 +1,9 @@
+{
+  "extends": "./node_modules/gts/",
+  "plugins": ["react-hooks"],
+  "sourceType": "module",
+  "rules": {
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}

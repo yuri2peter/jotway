@@ -1,0 +1,89 @@
+diff --git a/node_modules/koa-onerror/index.js b/node_modules/koa-onerror/index.js
+index ee43444..2440eb5 100644
+--- a/node_modules/koa-onerror/index.js
++++ b/node_modules/koa-onerror/index.js
+@@ -6,12 +6,80 @@ const fs = require('fs');
+ const escapeHtml = require('escape-html');
+ const sendToWormhole = require('stream-wormhole');
+ 
++
++const dev_error_template = `
++<!DOCTYPE html>
++<html>
++  <head>
++    <title>Error - {{status}}</title>
++    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
++
++    <style>
++      body {
++        padding: 50px 80px;
++        font: 14px "Helvetica Neue", Helvetica, sans-serif;
++      }
++
++      h1 {
++        font-size: 2em;
++        margin-bottom: 5px;
++      }
++
++      pre {
++        font-size: .8em;
++      }
++    </style>
++  </head>
++  <body>
++    <div id="error">
++      <h1>Error</h1>
++      <p>Looks like something broke!</p>
++      <pre>
++        <code>
++{{stack}}
++        </code>
++      </pre>
++    </div>
++  </body>
++</html>
++`
++const prod_error_template = `
++<!DOCTYPE html>
++<html>
++  <head>
++    <title>Error - {{status}}</title>
++    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
++
++    <style>
++      body {
++        padding: 50px 80px;
++        font: 14px "Helvetica Neue", Helvetica, sans-serif;
++      }
++
++      h1 {
++        font-size: 2em;
++        margin-bottom: 5px;
++      }
++
++      pre {
++        font-size: .8em;
++      }
++    </style>
++  </head>
++  <body>
++    <div id="error">
++      <h1>Error</h1>
++      <p>Looks like something broke!</p>
++    </div>
++  </body>
++</html>
++`
++
+ const env = process.env.NODE_ENV || 'development';
+ const isDev = env === 'development';
+-const templatePath = isDev
+-  ? path.join(__dirname, 'templates/dev_error.html')
+-  : path.join(__dirname, 'templates/prod_error.html');
+-const defaultTemplate = fs.readFileSync(templatePath, 'utf8');
++const defaultTemplate = isDev
++  ? dev_error_template
++  : prod_error_template
+ 
+ const defaultOptions = {
+   text,

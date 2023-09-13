@@ -1,0 +1,44 @@
+a {
+  color: #27a0f9;
+}
+
+.contexify {
+  font-size: 14px;
+  background-color: #00000080;
+  backdrop-filter: blur(30px);
+  --contexify-separator-color: #ffffff40;
+  --contexify-activeItem-bgColor: #ffffff20;
+  animation-duration: 0.15s;
+
+  .MuiSvgIcon-root {
+    margin-right: 4px;
+  }
+}
+
+.MuiBackdrop-root {
+}
+
+/* 滚动条 */
+/*css主要部分的样式*/
+/*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 5px; /*对垂直滚动条有效*/
+  height: 8px; /*对水平滚动条有效*/
+}
+/*定义滚动条的轨道颜色、内阴影及圆角*/
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+}
+/*定义滑块颜色、内阴影及圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+/*定义两端按钮的样式*/
+::-webkit-scrollbar-button {
+  display: none;
+}
+/*定义右下角汇合处的样式*/
+::-webkit-scrollbar-corner {
+  display: none;
+}

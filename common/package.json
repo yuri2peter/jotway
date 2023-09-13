@@ -1,0 +1,23 @@
+{
+  "name": "@local/common",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "nanoid": "^4.0.2",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.4.2",
+    "@types/lodash": "^4.14.195",
+    "@types/md5": "^2.3.2"
+  }
+}

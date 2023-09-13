@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <title>-</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="icon" type="image/svg+xml" href="/logos/note.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./assets/editormd.css" />
+    <!-- <link rel="stylesheet" href="./assets/github-markdown.css" /> -->
+    <script src="./assets/jquery.min.js"></script>
+    <script src="./assets/axios.min.js"></script>
+    <script src="./assets/editormd.min.js"></script>
+    <script src="./plugins/parse-html-dialog/parse-html-dialog.js"></script>
+    <!-- <script src="./languages/en.js"></script> -->
+    <script src="./assets/marked.min.js"></script>
+    <script src="./assets/turndown.js"></script>
+    <script src="./uploader.js"></script>
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <div id="layout">
+      <div id="el-editormd">
+        <textarea style="display: none"></textarea>
+      </div>
+      <!-- <div id="tbtn-toc-container"></div> -->
+      <div id="preview" class="markdown-body"></div>
+      <!-- 上传进度提示 -->
+      <div id="upload-info-box">
+        <div id="upload-progress"></div>
+      </div>
+    </div>
+  </body>
+</html>
