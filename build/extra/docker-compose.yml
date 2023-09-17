@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  jotway-app:
+    image: "node:16.18.1"
+    restart: unless-stopped
+    user: "root"
+    working_dir: /app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/app
+    command: "node ./dist/main.js"

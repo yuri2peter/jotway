@@ -60,7 +60,7 @@ export function getDefaultSettings(): Settings {
       '/backgrounds/bg5.jpg',
     ],
     wallpaperType: 'custom',
-    langType: 'zh',
+    langType: 'en',
   };
 }
 
