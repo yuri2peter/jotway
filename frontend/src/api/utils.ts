@@ -88,7 +88,6 @@ export function fetchHtml({
   timeout: number;
 }): Promise<string> {
   return new Promise((resolve, reject) => {
-    console.log(1);
     requestApi(server1, { url }, { timeout })
       .then(resolve)
       .catch(() => {});
@@ -96,7 +95,6 @@ export function fetchHtml({
       requestApi(server2, { url }, { timeout })
         .then(resolve)
         .catch(() => {});
-    console.log(timeout);
     setTimeout(() => {
       reject();
     }, timeout);
