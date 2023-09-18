@@ -2,6 +2,7 @@ import path from 'path';
 import { IS_PROD, ROOT_PATH } from './configs';
 import JsonDb from './libs/jsonDb';
 import { defaultData } from '@local/common';
+import { fixer } from './dbVersionFixer';
 
 const dbFile = path.resolve(ROOT_PATH, './data/db/main.json');
 const dbBackUpDir = path.resolve(ROOT_PATH, './data/db/main_backup');
@@ -31,16 +32,3 @@ export const db = new JsonDb({
 export async function initDb() {
   db.changeData((d) => {});
 }
-
-function fixer(
-  version: number,
-  changeData: (recipe: (base: unknown) => void) => void
-) {
-  if (version === 3) {
-    changeData(v3ToV4);
-    fixer(4, changeData);
-    return;
-  }
-}
-
-function v3ToV4(data: any) {}

@@ -120,7 +120,7 @@ export default class JsonDb<T> {
       },
       () => {
         // 获取时间字符串
-        const timeStr = dayjs().format('YYYY-MM-DD HH:mm');
+        const timeStr = dayjs().format('YYYY-MM-DD HH-mm');
         if (this.debug) {
           console.log(`[jsonDb] Backup at ${timeStr}.`);
         }
