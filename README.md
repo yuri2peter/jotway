@@ -1,6 +1,8 @@
 # jotway
 
-> 一个顺手的个人知识库。
+一个顺手的个人知识库。
+
+[中文文档](https://jotway-doc.yuri2.cn/)
 
 ## 概述
 
@@ -35,13 +37,31 @@ jotway 适用于：
 - 随时备份
 - 支持移动端视图
 
+## 开发计划
+
+- 默认书签模板
+- 缓存壁纸
+- 动态壁纸
+- 集成文档
+- 隐私数据 (待定)
+- RSS 阅读器 (待定)
+- 抓取网站快照(待定)
+
+## 感谢
+
+- editor.md 一个优秀的开源 markdown 编辑器
+- lovefc 提供项目早期建议
+
 ## 捐赠
 
 如果你觉得 jotway 对你有帮助，或者想对我微小的工作一点资瓷，欢迎给我捐赠。
+
+> 能点一个免费的赞也是极好。
 
 ![Alt text](/_media/donation_weixin.jpg)
 ![Alt text](/_media/donation_zhifubao.jpg)
 
 ## 社区
 
-https://github.com/yuri2peter/jotway
+- [Github Issues](https://github.com/yuri2peter/jotway/issues)
+- 开发者交流 QQ 群：191372634 （备注 jotway 交流）

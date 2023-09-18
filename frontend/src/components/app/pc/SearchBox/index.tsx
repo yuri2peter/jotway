@@ -7,7 +7,7 @@ import { Action, MyContext } from './SearchActions/defines';
 import { clamp } from 'lodash';
 import { selectInsiderLinkers } from 'src/store/state/defaultStore';
 
-const insiderLinkerPreviewCount = 3; // 需要在搜索栏预览的linker的数目
+const insiderLinkerPreviewCount = 5; // 需要在搜索栏预览的linker的数目
 
 const SearchBox: React.FC<{}> = () => {
   const {
