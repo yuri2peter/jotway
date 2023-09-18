@@ -9,7 +9,7 @@ import { SERVER_ORIGIN } from 'src/configs';
 export async function parseUrl(
   url: string,
   serverUrl: string = '',
-  timeout = 20000
+  timeout = 20000 // ms
 ) {
   let html = '';
   const u = new URL(url);
@@ -26,7 +26,6 @@ export async function parseUrl(
       });
     }
   } catch (error) {
-    console.warn(error);
     return {
       title: u.hostname,
       description: url,
@@ -89,6 +88,7 @@ export function fetchHtml({
   timeout: number;
 }): Promise<string> {
   return new Promise((resolve, reject) => {
+    console.log(1);
     requestApi(server1, { url }, { timeout })
       .then(resolve)
       .catch(() => {});
@@ -96,8 +96,9 @@ export function fetchHtml({
       requestApi(server2, { url }, { timeout })
         .then(resolve)
         .catch(() => {});
+    console.log(timeout);
     setTimeout(() => {
       reject();
-    }, timeout * 1000);
+    }, timeout);
   });
 }

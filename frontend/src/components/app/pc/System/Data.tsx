@@ -117,6 +117,7 @@ const ActionBlock: React.FC<{
 
 async function importBookmarks() {
   const file = await uploadFileFromLocal();
+  const settings = getStore().settings;
   try {
     const text = await readFileAsText(file);
     const data = await requestApi('utils/parse-bookmarks', { text });
@@ -170,7 +171,11 @@ async function importBookmarks() {
           (async () => {
             await sleep(i * 200);
             const { url, name, tags } = link;
-            const { iconLink, description } = await parseUrl(url);
+            const { iconLink, description } = await parseUrl(
+              url,
+              settings.htmlParseServer,
+              settings.htmlParseTimeoutSeconds * 1000
+            );
             await saveLinkerDirectly({
               ...getNewLinker(),
               desc: description || url,
@@ -185,7 +190,9 @@ async function importBookmarks() {
             });
           })()
         );
-        await Promise.all(tasks);
+        await Promise.all(tasks).catch((e) => {
+          console.warn(e);
+        });
         restrictedMessage({
           content: lang(
             `任务完成，已导入${count}个对象`,

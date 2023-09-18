@@ -4,11 +4,9 @@ import HourglassEmptySharpIcon from '@mui/icons-material/HourglassEmptySharp';
 import { parseUrl } from 'src/api/utils';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { openLinkerForm } from 'src/store/state/actions/linker';
-import { nanoid } from 'nanoid';
-import { now } from 'lodash';
 import { useMyContext } from './defines';
 import { resetSearch } from 'src/store/state/actions/search';
-import { useSelector } from 'src/store/state';
+import { getStore, useSelector } from 'src/store/state';
 import { selectQuery } from 'src/store/state/defaultStore';
 import ImageIcon from '../../../ImageIcon';
 import { lang } from 'src/components/app/utils';
@@ -18,6 +16,7 @@ const AddUrlLinker: React.FC<{ url: string; selected: boolean }> = ({
   url,
   selected,
 }) => {
+  const settings = getStore().settings;
   const { tag } = useSelector(selectQuery);
   const { refHandleSubmit } = useMyContext();
   const [parsing, setParsing] = useState(false);
@@ -44,7 +43,11 @@ const AddUrlLinker: React.FC<{ url: string; selected: boolean }> = ({
     (async () => {
       setParsing(true);
       try {
-        const r = await parseUrl(url);
+        const r = await parseUrl(
+          url,
+          settings.htmlParseServer,
+          settings.htmlParseTimeoutSeconds * 1000
+        );
         setParseUrlResult(r);
       } catch (error) {}
       setParsing(false);
@@ -55,6 +58,7 @@ const AddUrlLinker: React.FC<{ url: string; selected: boolean }> = ({
       refHandleSubmit.current = cb;
     }
   }, [selected, cb]);
+  console.log(parseUrlResult);
   return (
     <ListItem dense>
       <ListItemButton onClick={cb} selected={selected}>
