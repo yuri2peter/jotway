@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { changeStore, useSelector } from 'src/store/state';
 // import LinkerDisplay from '../LinkerDisplay';
 import {
+  selectIsPad,
   selectLinkerList,
   selectPageParams,
 } from 'src/store/state/defaultStore';
@@ -11,12 +12,21 @@ import BlockMenu, { MENU_ID as MENU_ID1 } from './BlockMenu';
 import { useContextMenu } from 'react-contexify';
 import LinkerDisplay from '../../LinkerDisplay';
 
-const LIST_HEIGHT = 436;
+const SIZE_PARAMS = {
+  NORMAL: {
+    height: 436,
+    width: 960,
+    col: 9,
+  },
+  PAD: { height: 326, width: 654, col: 7 },
+};
 
 const LinkerList: React.FC<{}> = () => {
   const [selectedLinkerId, setSelectedLinkerId] = useState('');
   const linkers = useSelector(selectLinkerList);
   const { pageIndex, maxPageIndex } = useSelector(selectPageParams);
+  const isPad = useSelector(selectIsPad);
+  const SIZE_PARAM = isPad ? SIZE_PARAMS.PAD : SIZE_PARAMS.NORMAL;
   const { show: show } = useContextMenu({
     id: MENU_ID1,
   });
@@ -57,13 +67,13 @@ const LinkerList: React.FC<{}> = () => {
 
   return (
     <>
-      <Box sx={{ minHeight: LIST_HEIGHT }} onWheel={handleWheel}>
+      <Box sx={{ minHeight: SIZE_PARAM.height }} onWheel={handleWheel}>
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(9, 1fr)',
+            gridTemplateColumns: `repeat(${SIZE_PARAM.col}, 1fr)`,
             gap: 0.5,
-            minWidth: 960,
+            minWidth: SIZE_PARAM.width,
           }}
         >
           {linkerBlocks}

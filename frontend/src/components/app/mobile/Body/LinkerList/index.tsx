@@ -10,7 +10,7 @@ const LinkerList: React.FC<{}> = () => {
   return (
     <Grid container spacing={0.5} p={1.5}>
       {linkers.map((t) => (
-        <Grid item xs={3}>
+        <Grid item xs={3} key={t.id}>
           <LinkerDisplay linker={t} key={t.id} />
         </Grid>
       ))}

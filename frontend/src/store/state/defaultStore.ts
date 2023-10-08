@@ -6,8 +6,7 @@ import {
 } from '@local/common';
 import { clamp, now } from 'lodash';
 import { createSelector } from 'reselect';
-import { TagClass, TagSelectOptions } from './types';
-import { Pin } from '@mui/icons-material';
+import { TagClass } from './types';
 
 export interface Store {
   appearance: {
@@ -16,6 +15,7 @@ export interface Store {
     mobileAtTop: boolean; // 手机视图时，是否已置顶
     aboutModalOpen: boolean;
     tagMenuTagName: string; // 临时记录是哪个标签被右键点击了
+    isPad: boolean; // 记录是否是pad尺寸
   };
   search: {
     inputValue: string;
@@ -49,6 +49,7 @@ export const defaultStore: Store = {
     mobileAtTop: true,
     aboutModalOpen: false,
     tagMenuTagName: '',
+    isPad: false,
   },
   search: {
     inputValue: '',
@@ -79,8 +80,11 @@ export const selectLinkers = (state: Store) => state.linkers;
 export const selectQuery = (state: Store) => state.query;
 const selectSearchText = (state: Store) => state.search.text;
 const selectQueryPageIndex = (state: Store) => state.query.pageIndex;
-const pageSize = 6 * 6;
+export const selectIsPad = (state: Store) => state.appearance.isPad;
 
+const selectPageSize = createSelector([selectIsPad], (isPad) => {
+  return isPad ? 7 * 3 : 9 * 4;
+});
 // 添加_text字段
 const selectLinkerFixed = createSelector([selectLinkers], (linkers) => {
   return linkers
@@ -129,8 +133,8 @@ export const selectLinkerFilterd = createSelector(
 
 // 生成page参数
 export const selectPageParams = createSelector(
-  [selectLinkerFilterd, selectQueryPageIndex],
-  (linkers, pageIndex) => {
+  [selectLinkerFilterd, selectQueryPageIndex, selectPageSize],
+  (linkers, pageIndex, pageSize) => {
     const minPageIndex = 0;
     const maxPageIndex = Math.ceil(linkers.length / pageSize) - 1;
     const pageIndexFixed = clamp(pageIndex, minPageIndex, maxPageIndex);
@@ -140,8 +144,8 @@ export const selectPageParams = createSelector(
 
 // 按页数显示
 export const selectLinkerList = createSelector(
-  [selectLinkerFilterd, selectPageParams],
-  (linkers, { pageIndex }) => {
+  [selectLinkerFilterd, selectPageParams, selectPageSize],
+  (linkers, { pageIndex }, pageSize) => {
     return linkers.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
   }
 );

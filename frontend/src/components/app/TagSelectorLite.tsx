@@ -1,9 +1,10 @@
-import { Button, MenuItem, Select, SxProps } from '@mui/material';
+import { Button, SxProps } from '@mui/material';
 import { useInViewport } from 'react-in-viewport';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { changeStore, useSelector } from 'src/store/state';
 import {
   selectHasUnClassified,
+  selectIsPad,
   selectQuery,
   selectTags,
 } from 'src/store/state/defaultStore';
@@ -17,6 +18,7 @@ const TagSelectorLite: React.FC = () => {
   const ref = useRef(null);
   const { inViewport } = useInViewport(ref);
   const { tag } = useSelector(selectQuery);
+  const isPad = useSelector(selectIsPad);
   const baseTags = useSelector(selectTags);
   const { show } = useContextMenu({
     id: MENU_ID,
@@ -31,7 +33,7 @@ const TagSelectorLite: React.FC = () => {
     <RowStack
       spacing={2}
       flexWrap={'wrap'}
-      maxWidth={1000}
+      maxWidth={isPad ? 600 : 1000}
       justifyContent={'center'}
       alignItems={'center'}
       sx={{
