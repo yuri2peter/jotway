@@ -61,7 +61,7 @@ export const myTheme = createTheme({
     MuiTooltip: {
       defaultProps: {
         arrow: false,
-        placement: 'bottom',
+        placement: 'top',
         TransitionComponent: Zoom,
         enterDelay: 500,
         disableInteractive: true,

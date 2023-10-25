@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import axiosServices from 'src/utils/axios';
 import { requestApi } from 'src/utils/request';
 import { z } from 'zod';
-import { UploadResults } from 'src/components/NowUploader';
+import { UploadResults } from 'src/components/miscs/NowUploader';
 import { SERVER_ORIGIN } from 'src/configs';
 
 export async function parseUrl(

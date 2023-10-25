@@ -1,8 +1,8 @@
 import { Button, Stack, TextField, Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import CentralBox from 'src/components/CentralBox';
-import AuthFooter from 'src/components/app/AuthFooter';
+import CentralBox from 'src/components/miscs/CentralBox';
+import AuthFooter from 'src/components/app/miscs/AuthFooter';
 import { lang } from 'src/components/app/utils';
 import { login } from 'src/store/state/actions/auth';
 import { glassStyle } from 'src/styles/utils';

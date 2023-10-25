@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Background from 'src/components/app/Background';
+import Background from 'src/components/app/miscs/Background';
 import { useStore } from 'src/store/state';
 import { updateLocalWallpaper } from 'src/store/state/actions/settings';
 

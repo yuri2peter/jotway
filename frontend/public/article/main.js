@@ -1,10 +1,22 @@
-$(function () {
+/* eslint-disable no-undef */
+$(() => {
   const isMobile = detectMobile();
   const tabSize = 2;
   let articleId = '';
   let articleContent = '';
   let articleName = '';
   const isEn = localStorage.getItem('langType') === 'en';
+
+  bugFix();
+
+  function bugFix() {
+    if (isMobile) {
+      // editormd在非watch模式下预览，会在触发resize事件时引起白屏。禁用resize事件解决。
+      window.addEventListener('resize', (event) => {
+        event.stopImmediatePropagation();
+      });
+    }
+  }
 
   function lang(zh, en) {
     return isEn ? en : zh;
@@ -27,7 +39,7 @@ $(function () {
       data: {
         linker: { name, content },
       },
-    } = await axios.post('/api/linker/get', { id }).catch((e) => {
+    } = await axios.post('/api/linker/get', { id }).catch(() => {
       alert(lang('请先登录', 'Please login'));
       location.href = '/login';
     });
@@ -185,6 +197,10 @@ $(function () {
             }
           },
         });
+        // 手机模式默认打开预览
+        if (isMobile) {
+          editor.previewing();
+        }
       },
     });
 
@@ -196,18 +212,13 @@ $(function () {
     return editor;
   }
 
-  function initPreview() {
-    const text = marked.parse(articleContent);
-    $('#preview').html(text);
-  }
-
   function parseQueries(url) {
     const url1 = url || window.document.location.search;
     let u = url1.split('?');
-    if (typeof u[1] == 'string') {
+    if (typeof u[1] === 'string') {
       u = u[1].split('&');
       const get = {};
-      for (let i in u) {
+      for (const i in u) {
         const j = u[i].split('=');
         get[j[0]] = decodeURIComponent(j[1]);
       }

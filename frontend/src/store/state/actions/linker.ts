@@ -8,7 +8,6 @@ import { calcLinkerOpenUrl } from 'src/components/app/utils';
 export function openLinkerForm(linker: Linker, create = false) {
   const obj = cloneDeep(linker);
   changeStore((d) => {
-    d.search.focus = false;
     d.linkerForm.open = true;
     d.linkerForm.linker = obj;
     d.linkerForm.create = create;

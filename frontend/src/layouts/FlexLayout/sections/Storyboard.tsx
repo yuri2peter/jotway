@@ -1,6 +1,6 @@
 import { Box, Paper, Stack, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
-import CentralBox from 'src/components/CentralBox';
+import CentralBox from 'src/components/miscs/CentralBox';
 import { config } from '../config';
 
 const debug = false;

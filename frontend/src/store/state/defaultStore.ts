@@ -4,7 +4,7 @@ import {
   getDefaultSettings,
   getNewLinker,
 } from '@local/common';
-import { clamp, now } from 'lodash';
+import { now } from 'lodash';
 import { createSelector } from 'reselect';
 import { TagClass } from './types';
 
@@ -13,14 +13,14 @@ export interface Store {
     langType: 'en' | 'zh';
     bgImage: string;
     mobileAtTop: boolean; // 手机视图时，是否已置顶
-    aboutModalOpen: boolean;
+    aboutModalOpen: boolean; // 关于模态框
     tagMenuTagName: string; // 临时记录是哪个标签被右键点击了
-    isPad: boolean; // 记录是否是pad尺寸
+    blockMenuBlockId: string; // 临时记录是哪个Block被右键点击了
+    isMobile: boolean; // 记录是否是手机尺寸
   };
   search: {
     inputValue: string;
     text: string;
-    focus: boolean;
   };
   linkerForm: {
     open: boolean;
@@ -49,12 +49,12 @@ export const defaultStore: Store = {
     mobileAtTop: true,
     aboutModalOpen: false,
     tagMenuTagName: '',
-    isPad: false,
+    blockMenuBlockId: '',
+    isMobile: false,
   },
   search: {
     inputValue: '',
     text: '',
-    focus: false,
   },
   linkerForm: {
     open: false,
@@ -78,13 +78,10 @@ export const defaultStore: Store = {
 
 export const selectLinkers = (state: Store) => state.linkers;
 export const selectQuery = (state: Store) => state.query;
-const selectSearchText = (state: Store) => state.search.text;
-const selectQueryPageIndex = (state: Store) => state.query.pageIndex;
-export const selectIsPad = (state: Store) => state.appearance.isPad;
+export const selectIsMobile = (state: Store) => state.appearance.isMobile;
+export const selectIsKeywordMode = (state: Store) =>
+  state.query.tagClass === 'keyword';
 
-const selectPageSize = createSelector([selectIsPad], (isPad) => {
-  return isPad ? 7 * 3 : 9 * 4;
-});
 // 添加_text字段
 const selectLinkerFixed = createSelector([selectLinkers], (linkers) => {
   return linkers
@@ -109,7 +106,6 @@ const selectLinkerFixed = createSelector([selectLinkers], (linkers) => {
 export const selectLinkerFilterd = createSelector(
   [selectLinkerFixed, selectQuery],
   (linkers, { tag, keyword, tagClass }) => {
-    const nowTime = now();
     return linkers.filter((t) => {
       if (keyword) {
         return t._text.toLowerCase().includes(keyword.toLowerCase());
@@ -121,44 +117,9 @@ export const selectLinkerFilterd = createSelector(
         return t.tags.length === 0;
       }
       if (tagClass === 'recently') {
-        const timeBound = 60 * 60 * 1000; // 最近一小时
-        return (
-          nowTime - t.createdAt < timeBound || nowTime - t.accessAt < timeBound
-        );
+        return isRecently(t);
       }
       return true;
-    });
-  }
-);
-
-// 生成page参数
-export const selectPageParams = createSelector(
-  [selectLinkerFilterd, selectQueryPageIndex, selectPageSize],
-  (linkers, pageIndex, pageSize) => {
-    const minPageIndex = 0;
-    const maxPageIndex = Math.ceil(linkers.length / pageSize) - 1;
-    const pageIndexFixed = clamp(pageIndex, minPageIndex, maxPageIndex);
-    return { minPageIndex, maxPageIndex, pageIndex: pageIndexFixed };
-  }
-);
-
-// 按页数显示
-export const selectLinkerList = createSelector(
-  [selectLinkerFilterd, selectPageParams, selectPageSize],
-  (linkers, { pageIndex }, pageSize) => {
-    return linkers.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
-  }
-);
-
-// 内部搜索预览搜索结果数目
-export const selectInsiderLinkers = createSelector(
-  [selectLinkerFixed, selectSearchText],
-  (linkers, keyword) => {
-    return linkers.filter((t) => {
-      const keywordMatch = keyword
-        ? t._text.toLowerCase().includes(keyword.toLowerCase())
-        : true;
-      return keywordMatch;
     });
   }
 );
@@ -188,6 +149,7 @@ export const selectTagCounts = createSelector([selectLinkers], (linkers) => {
     return {
       name: t,
       weight: tags[t].accessCount / tags[t].numCount + tags[t].numCount * 0.02, // 用总访问 / 总次数 + 次数 * q，得到权重
+      numCount: tags[t].numCount,
     };
   });
   // 按权重排序，高权重意味着该tag分类下的linker平均访问次数较高
@@ -201,10 +163,51 @@ export const selectTags = createSelector([selectTagCounts], (tagCounts) => {
   return tagCounts.map((t) => t.name);
 });
 
-// 是否有未分类的对象
-export const selectHasUnClassified = createSelector(
+// 未分类的对象的数量统计
+export const selectUnClassifiedLinkersCount = createSelector(
   [selectLinkers],
   (linkers) => {
-    return linkers.some((l) => l.tags.length === 0);
+    return linkers.filter((l) => l.tags.length === 0).length;
+  }
+);
+
+// 左侧标签选择器宽度
+export const selectTagMenuWidth = createSelector(
+  [selectIsMobile],
+  (isMobile) => {
+    return isMobile ? 'calc(100% - 284px)' : 160;
+  }
+);
+
+// 最近的对象的数量统计
+export const selectRecentlyLinkersCount = createSelector(
+  [selectLinkers],
+  (linkers) => {
+    return linkers.filter(isRecently).length;
+  }
+);
+
+function isRecently(linker: Linker) {
+  const nowTime = now();
+  const timeBound = 60 * 60 * 1000; // 最近一小时
+  return (
+    nowTime - linker.createdAt < timeBound ||
+    nowTime - linker.accessAt < timeBound
+  );
+}
+
+// 全部对象的数量统计
+export const selectAllLinkersCount = createSelector(
+  [selectLinkers],
+  (linkers) => {
+    return linkers.length;
+  }
+);
+
+// 当前搜索对象的数量统计
+export const selectSearchLinkersCount = createSelector(
+  [selectLinkerFilterd, selectIsKeywordMode],
+  (linkers, isKeywordMode) => {
+    return isKeywordMode ? linkers.length : 0;
   }
 );

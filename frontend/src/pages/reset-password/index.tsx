@@ -10,8 +10,8 @@ import {
   Button,
 } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
-import CentralBox from 'src/components/CentralBox';
-import AuthFooter from 'src/components/app/AuthFooter';
+import CentralBox from 'src/components/miscs/CentralBox';
+import AuthFooter from 'src/components/app/miscs/AuthFooter';
 import { lang } from 'src/components/app/utils';
 import { navigate } from 'src/hacks/navigate';
 import { snackbarMessage } from 'src/hacks/snackbarMessage';
@@ -55,7 +55,9 @@ const ResetPage: React.FC<{}> = () => {
           'error'
         );
       }
-    } catch {}
+    } catch {
+      console.error('verify-reset-code error');
+    }
   }, [code]);
   const handleSubmitStep1 = useCallback(async () => {
     if (password1 !== password2) {
@@ -248,7 +250,9 @@ const ResetPage: React.FC<{}> = () => {
                         );
                         navigate('/login');
                       }
-                    } catch {}
+                    } catch {
+                      console.error('reset password failed');
+                    }
                   }}
                 >
                   {lang('确认', 'Confirm')}

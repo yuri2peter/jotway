@@ -33,8 +33,6 @@ export const settingsSchema = z.object({
   htmlParseServer: z.union([z.string().url(), z.literal('')]),
   // 网址解析服务请求超时时间，单位：秒
   htmlParseTimeoutSeconds: z.number().int().min(1).max(20),
-  // 搜索引擎配置，可留空，搜索地址必须包含TEXT占位符，如 "https://www.baidu.com/s?wd=TEXT"
-  searchUrl: z.union([z.string().url().includes('TEXT'), z.literal('')]),
   // 当前的自定义壁纸
   customWallpaperUrl: z.string(),
   // 所有的自定义壁纸
@@ -50,7 +48,6 @@ export function getDefaultSettings(): Settings {
   return {
     htmlParseServer: '',
     htmlParseTimeoutSeconds: 5,
-    searchUrl: '',
     customWallpaperUrl: '/backgrounds/bg5.jpg',
     customWallpapers: [
       '/backgrounds/bg1.jpeg',
