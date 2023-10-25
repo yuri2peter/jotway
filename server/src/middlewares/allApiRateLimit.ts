@@ -5,9 +5,9 @@ import { startsWith } from '../utils/miscs';
 const checkList = ['/api'];
 const excludeList: string[] = [];
 
-// 十分钟内只允许访问1000次
+// 十分钟内只允许访问999次
 const apiRateLimiter = new RateLimiter({
-  max: 1000,
+  max: 9999,
   windowSeconds: 10 * 60,
 });
 

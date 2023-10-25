@@ -169,7 +169,7 @@ async function importBookmarks() {
         let count = 0;
         const tasks = links1.map((link, i) =>
           (async () => {
-            await sleep(i * 200);
+            await sleep(i * 500);
             const { url, name, tags } = link;
             const { iconLink, description } = await parseUrl(
               url,
