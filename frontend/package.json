@@ -13,6 +13,9 @@
     "fix": "gts fix",
     "free-port": "npx kill-port 8000"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@emotion/react": "^11.9.3",

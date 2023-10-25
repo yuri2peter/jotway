@@ -8,7 +8,12 @@ import { readFileAsText, uploadFileFromLocal } from 'src/utils/file';
 import { requestApi } from 'src/utils/request';
 import { dialogConfirm } from 'src/hacks/comfirm';
 import { getStore } from 'src/store/state';
-import { checkImageSrc, getAbsoluteUrl, sleep } from 'src/utils/miscs';
+import {
+  checkImageSrc,
+  getAbsoluteUrl,
+  sleep,
+  waitUntil,
+} from 'src/utils/miscs';
 import { saveLinkerDirectly } from 'src/store/state/actions/linker';
 import { parseUrl } from 'src/api/utils';
 import { uniqBy } from 'lodash';
@@ -166,11 +171,16 @@ async function importBookmarks() {
           content: lang('正在初始化....', 'Initializing...'),
           closeable: false,
         });
-        let count = 0;
-        const tasks = links1.map((link, i) =>
-          (async () => {
-            await sleep(i * 500);
+        let successCount = 0; // 成功计数
+        let count = 0; // 总计数
+        let concurrency = 20; // 并发资源
+        const tasks = links1.map((link, i) => async () => {
+          concurrency--;
+          try {
             const { url, name, tags } = link;
+            restrictedMessage({
+              content: `[${i + 1} / ${links1.length}] ${name}`,
+            });
             const { iconLink, description } = await parseUrl(
               url,
               settings.htmlParseServer,
@@ -184,19 +194,26 @@ async function importBookmarks() {
               icon: iconLink,
               tags,
             });
+            successCount++;
+          } catch (error) {
+            console.warn(error);
+          } finally {
             count++;
-            restrictedMessage({
-              content: `[${count} / ${links1.length}] ${name}`,
-            });
-          })()
-        );
-        await Promise.all(tasks).catch((e) => {
-          console.warn(e);
+            concurrency++;
+          }
         });
+        // 循环执行导入，启用并发控制
+        for (const task of tasks) {
+          await waitUntil(() => concurrency >= 1);
+          await sleep(400);
+          task();
+        }
+        // 等待所有导入完成
+        await waitUntil(() => count === links1.length);
         restrictedMessage({
           content: lang(
-            `任务完成，已导入${count}个对象`,
-            `Task completed. ${count} objects processed.`
+            `任务完成，已导入${successCount}个对象`,
+            `Task completed. ${successCount} objects processed.`
           ),
           closeable: true,
         });
