@@ -19,3 +19,12 @@ export function lang<T>(zh: T, en: T): T {
     return en;
   }
 }
+
+// 显示语言2 (使用localStorage)
+export function lang2<T>(zh: T, en: T): T {
+  if (localStorage.getItem('langType') === 'zh') {
+    return zh;
+  } else {
+    return en;
+  }
+}

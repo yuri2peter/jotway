@@ -12,7 +12,7 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import CentralBox from 'src/components/miscs/CentralBox';
 import AuthFooter from 'src/components/app/miscs/AuthFooter';
-import { lang } from 'src/components/app/utils';
+import { lang2 } from 'src/components/app/utils';
 import { navigate } from 'src/hacks/navigate';
 import { snackbarMessage } from 'src/hacks/snackbarMessage';
 import { glassStyle } from 'src/styles/utils';
@@ -45,13 +45,13 @@ const ResetPage: React.FC<{}> = () => {
       });
       if (verified) {
         snackbarMessage(
-          lang('验证成功', 'Verification successful.'),
+          lang2('验证成功', 'Verification successful.'),
           'success'
         );
         setCurrentStep(1);
       } else {
         snackbarMessage(
-          error || lang('验证码错误', 'Verification failed.'),
+          error || lang2('验证码错误', 'Verification failed.'),
           'error'
         );
       }
@@ -62,14 +62,14 @@ const ResetPage: React.FC<{}> = () => {
   const handleSubmitStep1 = useCallback(async () => {
     if (password1 !== password2) {
       snackbarMessage(
-        lang('两次输入密码不一致', 'The two passwords are not the same.'),
+        lang2('两次输入密码不一致', 'The two passwords are not the same.'),
         'error'
       );
       return;
     }
     if (password1.length < 6 || password1.length > 32) {
       snackbarMessage(
-        lang('密码长度不正确', 'Password length is incorrect.'),
+        lang2('密码长度不正确', 'Password length is incorrect.'),
         'error'
       );
       return;
@@ -87,12 +87,12 @@ const ResetPage: React.FC<{}> = () => {
         sx={{ ...glassStyle(), padding: 3 }}
       >
         <Typography color={'white'} variant="h4" textAlign={'center'}>
-          {lang('重置密码', 'Reset Password')}
+          {lang2('重置密码', 'Reset Password')}
         </Typography>
         <Stack spacing={2} width={'min(80vw, 300px)'}>
           <Stepper activeStep={currentStep} orientation="vertical">
             <Step>
-              <StepLabel>{lang('身份验证', 'Authentication')}</StepLabel>
+              <StepLabel>{lang2('身份验证', 'Authentication')}</StepLabel>
               <StepContent>
                 {codeState === 1 && (
                   <>
@@ -101,9 +101,9 @@ const ResetPage: React.FC<{}> = () => {
                       onChange={(e) => {
                         setCode(e.target.value);
                       }}
-                      placeholder={lang('验证码', 'Verification Code')}
+                      placeholder={lang2('验证码', 'Verification Code')}
                       fullWidth
-                      helperText={lang(
+                      helperText={lang2(
                         '该验证码已在服务端控制台打印',
                         'This verification code has been printed on the server console.'
                       )}
@@ -123,14 +123,14 @@ const ResetPage: React.FC<{}> = () => {
                         textTransform: 'none',
                       }}
                     >
-                      {lang('提交', 'Submit')}
+                      {lang2('提交', 'Submit')}
                     </Button>
                   </>
                 )}
                 {codeState === 2 && (
                   <>
                     <Typography color={'#fff'}>
-                      {lang(
+                      {lang2(
                         '检测到默认密码，请立即修改密码',
                         'Detected the default password. Please change it immediately.'
                       )}
@@ -147,7 +147,7 @@ const ResetPage: React.FC<{}> = () => {
                         textTransform: 'none',
                       }}
                     >
-                      {lang('确定', 'Confirm')}
+                      {lang2('确定', 'Confirm')}
                     </Button>
                   </>
                 )}
@@ -161,16 +161,16 @@ const ResetPage: React.FC<{}> = () => {
                     marginTop: 2,
                   }}
                 >
-                  {lang('返回主页', 'Back to Home Page')}
+                  {lang2('返回主页', 'Back to Home Page')}
                 </Button>
               </StepContent>
             </Step>
             <Step>
-              <StepLabel>{lang('设置新密码', 'Set New Password')}</StepLabel>
+              <StepLabel>{lang2('设置新密码', 'Set New Password')}</StepLabel>
               <StepContent>
                 <TextField
                   autoFocus
-                  placeholder={lang('输入密码', 'Input Password')}
+                  placeholder={lang2('输入密码', 'Input Password')}
                   fullWidth
                   type="password"
                   value={password1}
@@ -178,12 +178,12 @@ const ResetPage: React.FC<{}> = () => {
                     setPassword1(e.target.value);
                   }}
                   helperText={
-                    lang('当前密码长度: ', 'Password length: ') +
+                    lang2('当前密码长度: ', 'Password length: ') +
                     password1.length
                   }
                 />
                 <TextField
-                  placeholder={lang('再次输入', 'Repeat Password')}
+                  placeholder={lang2('再次输入', 'Repeat Password')}
                   fullWidth
                   type="password"
                   value={password2}
@@ -193,7 +193,7 @@ const ResetPage: React.FC<{}> = () => {
                   sx={{
                     marginTop: 2,
                   }}
-                  helperText={lang(
+                  helperText={lang2(
                     '密码长度不少于6位，不超过32位',
                     'Password length at least 6, not more than 32.'
                   )}
@@ -213,15 +213,15 @@ const ResetPage: React.FC<{}> = () => {
                     textTransform: 'none',
                   }}
                 >
-                  {lang('提交', 'Submit')}
+                  {lang2('提交', 'Submit')}
                 </Button>
               </StepContent>
             </Step>
             <Step>
-              <StepLabel>{lang('确认', 'Confirm')}</StepLabel>
+              <StepLabel>{lang2('确认', 'Confirm')}</StepLabel>
               <StepContent>
                 <Typography color={'#fff'} align="center" mb={3}>
-                  {lang(
+                  {lang2(
                     '确认执行密码重置？',
                     'Are you sure to reset the password?'
                   )}
@@ -242,7 +242,7 @@ const ResetPage: React.FC<{}> = () => {
                         snackbarMessage(error, 'error');
                       } else {
                         snackbarMessage(
-                          lang(
+                          lang2(
                             '重置成功，请重新登录',
                             'Reset successfully. Please log in again.'
                           ),
@@ -255,7 +255,7 @@ const ResetPage: React.FC<{}> = () => {
                     }
                   }}
                 >
-                  {lang('确认', 'Confirm')}
+                  {lang2('确认', 'Confirm')}
                 </Button>
                 <Button
                   variant="outlined"
@@ -267,7 +267,7 @@ const ResetPage: React.FC<{}> = () => {
                     marginTop: 2,
                   }}
                 >
-                  {lang('取消', 'Cancel')}
+                  {lang2('取消', 'Cancel')}
                 </Button>
               </StepContent>
             </Step>

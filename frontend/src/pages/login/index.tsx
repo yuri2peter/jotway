@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CentralBox from 'src/components/miscs/CentralBox';
 import AuthFooter from 'src/components/app/miscs/AuthFooter';
-import { lang } from 'src/components/app/utils';
+import { lang2 } from 'src/components/app/utils';
 import { login } from 'src/store/state/actions/auth';
 import { glassStyle } from 'src/styles/utils';
 
@@ -29,7 +29,7 @@ const LoginPage: React.FC<{}> = () => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            placeholder={lang('授权码', 'Auth Code')}
+            placeholder={lang2('授权码', 'Auth Code')}
             autoFocus
             fullWidth
             type="password"
@@ -61,9 +61,9 @@ const LoginPage: React.FC<{}> = () => {
               fontSize: 16,
             }}
           >
-            {lang('解锁', 'Unlock')}
+            {lang2('解锁', 'Unlock')}
           </Button>
-          {lang(
+          {lang2(
             <Typography variant="body1" textAlign={'center'} fontSize={14}>
               忘记密码？点击<Link to={'/reset-password'}>这里</Link>
             </Typography>,

@@ -1,13 +1,13 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import { lang } from '../utils';
+import { lang2 } from '../utils';
 
 const githubHref = 'https://github.com/yuri2peter/jotway';
 
 const AuthFooter: React.FC<{}> = () => {
   return (
     <>
-      {lang(
+      {lang2(
         <Typography
           variant="body1"
           color={'text.secondary'}
