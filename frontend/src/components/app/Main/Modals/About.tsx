@@ -31,7 +31,7 @@ const AboutModal: React.FC = () => {
         <Typography noWrap>
           {lang('社区: ', 'Community: ')}
           <Box component={'a'} href={githubHref} target="_blank">
-            github.com/yuri2peter
+            github.com/yuri2peter/jotway
           </Box>
         </Typography>
         <Typography noWrap>
