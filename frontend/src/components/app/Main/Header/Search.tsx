@@ -34,7 +34,7 @@ const Search: React.FC<{}> = () => {
     if (v) {
       changeStore((d) => {
         d.query.keyword = v;
-        d.query.tag = '';
+        // d.query.tag = '';
         d.query.tagClass = 'keyword';
       });
     } else {
@@ -127,7 +127,7 @@ const Search: React.FC<{}> = () => {
                   article: true,
                   tags: tag ? [tag] : [],
                   content: `# ${inputValue}\n\n> ${dayjs().format(
-                    'YYYY-MM-DD '
+                    'YYYY-MM-DD'
                   )}\n\n`,
                 },
                 true

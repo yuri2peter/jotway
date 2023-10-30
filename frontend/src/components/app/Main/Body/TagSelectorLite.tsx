@@ -19,7 +19,7 @@ import { TAG_MENU_ID } from '../defines';
 const TagSelectorLite: React.FC = () => {
   const ref = useRef(null);
   const { inViewport } = useInViewport(ref);
-  const { tag } = useSelector(selectQuery);
+  const { tag, tagClass } = useSelector(selectQuery);
   const tagMenuWidth = useSelector(selectTagMenuWidth);
   const baseTags = useSelector(selectTagCounts);
   const { show } = useContextMenu({
@@ -56,7 +56,7 @@ const TagSelectorLite: React.FC = () => {
       <TagClass />
       {/* 常规标签 */}
       {baseTags.map(({ name, numCount }) => {
-        const active = tag === name;
+        const active = tag === name && tagClass === 'tagSelected';
         return (
           <ListItemButton
             key={name}
