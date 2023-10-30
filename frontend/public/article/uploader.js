@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 function createUploader({ cm, dropEl, lang }) {
   function insertLinkToEditor({ cm, mimetype, newFilename, originalFilename }) {
     let content = `[${originalFilename}](/uploads/${newFilename})`;
@@ -101,20 +103,6 @@ function createUploader({ cm, dropEl, lang }) {
       e.preventDefault();
       e.stopPropagation();
       uploadFileToServer(file).then(handleUploaded);
-    } else {
-      return;
-      // 获取文本
-      let text = '';
-      // 尝试获取html文本
-      // 如果用户按下了shift键，将会自动转为'text/plain'
-      const html = e.clipboardData.getData('text/html');
-      if (html) {
-        const turndownService = new TurndownService();
-        text = turndownService.turndown(html);
-      } else {
-        text = e.clipboardData.getData('text/plain');
-      }
-      cm.replaceSelection(text);
     }
   });
 
@@ -140,7 +128,7 @@ function createUploader({ cm, dropEl, lang }) {
       );
       elInput.onchange = () => {
         fileCancle = false;
-        const file = elInput?.files?.[0];
+        const file = elInput.files[0];
         if (file) {
           uploadFileToServer(file).then(handleUploaded);
         }
