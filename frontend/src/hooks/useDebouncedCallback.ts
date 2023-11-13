@@ -9,5 +9,5 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   return useMemo(() => {
     return debounce(cb, delay);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cb, deps, delay]);
+  }, [cb, delay, ...deps]);
 }

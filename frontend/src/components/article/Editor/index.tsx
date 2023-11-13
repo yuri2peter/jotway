@@ -36,7 +36,13 @@ const EditorMain: React.FC<{
   zh?: boolean;
   defaultValue?: string;
   onChange?: (v: string) => void;
-}> = ({ zh = false, defaultValue = '', onChange = () => {} }) => {
+  onSave?: (v: string) => void;
+}> = ({
+  zh = false,
+  defaultValue = '',
+  onChange = () => {},
+  onSave = () => {},
+}) => {
   const [value, setValue] = useState(defaultValue);
   const plugins = [
     breaks(),
@@ -52,7 +58,7 @@ const EditorMain: React.FC<{
     math({ locale: zh ? mathLocaleZh : mathLocaleEn }),
     mermaid({ locale: zh ? mermaidLocaleZh : mermaidLocaleEn }),
   ];
-  const handleChange = useDebouncedCallback(onChange);
+  const handleSave = useDebouncedCallback(onSave);
   return (
     <Box
       height={1}
@@ -69,7 +75,8 @@ const EditorMain: React.FC<{
         locale={zh ? mainLocaleZh : mainLocaleEn}
         onChange={(v) => {
           setValue(v);
-          handleChange(v);
+          handleSave(v);
+          onChange(v);
         }}
       />
     </Box>

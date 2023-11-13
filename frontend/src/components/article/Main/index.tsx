@@ -20,9 +20,11 @@ const ArticleMain: React.FC<{ id: string }> = ({ id }) => {
       setLinker(linkerParsed);
     });
   }, [id]);
-  const handleChange = useCallback(
+  const handleChange = useCallback(() => {
+    setUpdating(true);
+  }, []);
+  const handleSave = useCallback(
     (v: string) => {
-      setUpdating(true);
       requestApi('linker/update-content', {
         id,
         content: v,
@@ -59,6 +61,7 @@ const ArticleMain: React.FC<{ id: string }> = ({ id }) => {
           zh={lang(true, false)}
           defaultValue={linker.content}
           onChange={handleChange}
+          onSave={handleSave}
         />
       </Box>
     </CentralBox>
