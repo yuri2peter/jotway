@@ -20,7 +20,9 @@ const LinkerForm: React.FC<{}> = () => {
   }, [article]);
   return (
     <Modal onClose={closeLinkerForm} title={name} open={open} maxWidth="md">
-      <Box maxWidth={840}>{form}</Box>
+      <Box maxWidth={840} width={'calc(100vw - 116px)'}>
+        {form}
+      </Box>
     </Modal>
   );
 };

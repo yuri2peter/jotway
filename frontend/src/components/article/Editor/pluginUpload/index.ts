@@ -64,6 +64,7 @@ export default function UploadFile({
     editorEffect(ctx) {
       const el = ctx.editor.getWrapperElement();
       const handlePaste = async (e: ClipboardEvent) => {
+        console.log(e);
         if (e.clipboardData?.files?.length) {
           e.preventDefault();
           const fileList = await uploadFiles(Array.from(e.clipboardData.files));
