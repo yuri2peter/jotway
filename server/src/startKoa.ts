@@ -63,10 +63,10 @@ function applyApp(app: Koa) {
       formidable: {
         uploadDir: htmlResourcesUploadsPath,
         maxFileSize: MAX_FILE_SIZE * 1024 * 1024, // MAX_FILE_SIZE MB
-        multiples: false,
+        multiples: true,
         onFileBegin: (name, file) => {
           const { originalFilename } = file;
-          const fileName = (originalFilename || '').replace(/[\/\\]/g, '');
+          const fileName = (originalFilename || '').replace(/[\/\\\s]/g, '_');
           const ext = path.extname(fileName);
           // 使用原始名+随机文件名
           const newFilename =

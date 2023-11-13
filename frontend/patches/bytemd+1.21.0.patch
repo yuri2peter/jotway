@@ -1,0 +1,18 @@
+diff --git a/node_modules/bytemd/dist/index.mjs b/node_modules/bytemd/dist/index.mjs
+index acc506d..0e2bc07 100644
+--- a/node_modules/bytemd/dist/index.mjs
++++ b/node_modules/bytemd/dist/index.mjs
+@@ -3405,7 +3405,12 @@ function instance($$self, $$props, $$invalidate) {
+   };
+   const click_handler_2 = (e) => {
+     const headings = previewEl.querySelectorAll("h1,h2,h3,h4,h5,h6");
+-    headings[e.detail].scrollIntoView();
++    // headings[e.detail].scrollIntoView();
++    // 修改为scrollTo，解决滚动页面偏移问题，添加动画
++    previewEl.scrollTo({
++      behavior: "smooth",
++      top: headings[e.detail].offsetTop - previewEl.offsetTop,
++    });
+   };
+   const sync_handler = (e) => {
+     $$invalidate(17, syncEnabled = e.detail);

@@ -8,7 +8,7 @@ import { SERVER_ORIGIN } from 'src/configs';
 
 export async function parseUrl(
   url: string,
-  serverUrl: string = '',
+  serverUrl = '',
   timeout = 20000 // ms
 ) {
   let html = '';
@@ -35,10 +35,10 @@ export async function parseUrl(
     };
   }
   // TODO RSS解析
-  try {
-  } catch (error) {
-    // not rss
-  }
+  // try {
+  // } catch (error) {
+  //   // not rss
+  // }
 
   // 常规网页解析
   const $ = load(html);

@@ -4,6 +4,7 @@ body {
 
 a {
   color: #27a0f9;
+  text-decoration: none;
 }
 
 .contexify {
@@ -36,7 +37,7 @@ a {
 /*定义滑块颜色、内阴影及圆角*/
 ::-webkit-scrollbar-thumb {
   border-radius: 7px;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 /*定义两端按钮的样式*/
 ::-webkit-scrollbar-button {

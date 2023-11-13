@@ -12,6 +12,7 @@ export interface UploadResults {
   newFilename: string;
   originalFilename: string;
   size: number;
+  url: string;
 }
 
 // Interface for the component props

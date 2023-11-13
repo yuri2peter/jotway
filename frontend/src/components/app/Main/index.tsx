@@ -15,8 +15,8 @@ import AboutModal from './Modals/About';
 import SystemModal from './Modals/System';
 
 const Main: React.FC<{}> = () => {
-  const isMobile = useSelector(selectIsMobile);
   useLogic();
+  const isMobile = useSelector(selectIsMobile);
   return (
     <CentralBox sx={{ height: 1 }}>
       <Stack

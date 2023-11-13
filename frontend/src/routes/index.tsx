@@ -7,6 +7,7 @@ import FlexLayout from 'src/layouts/FlexLayout';
 const HomePage = Loadable(lazy(() => import('src/pages/home')));
 const LoginPage = Loadable(lazy(() => import('src/pages/login')));
 const ResetPage = Loadable(lazy(() => import('src/pages/reset-password')));
+const ArticlePage = Loadable(lazy(() => import('src/pages/a')));
 
 function MainRoute() {
   return (
@@ -14,6 +15,7 @@ function MainRoute() {
       <Route path="/" element={<AppGuard />}>
         <Route path="/" element={<FlexLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/a/:id" element={<ArticlePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/reset-password" element={<ResetPage />} />
         </Route>

@@ -1,0 +1,57 @@
+.bytemd {
+  height: 100%;
+  /* background: transparent; */
+}
+
+.bytemd ::-webkit-scrollbar-thumb {
+  background-color: rgba(177, 177, 177, 0.6);
+}
+
+.bytemd-toolbar {
+  /* background: #ffffffdf; */
+}
+
+.bytemd-editor .cm-s-default.CodeMirror {
+  /* background: #ffffffaf; */
+}
+.bytemd-preview {
+  /* background: #ffffffbf; */
+}
+.bytemd-sidebar {
+  /* background: #ffffffcf; */
+}
+.bytemd-status {
+  min-height: 24px;
+  /* background: #ffffffdf; */
+}
+
+.cm-s-default .cm-header {
+  color: #1ba2f0;
+  font-weight: 400;
+}
+
+.cm-s-default .cm-variable-2 {
+  color: #000;
+}
+
+.cm-s-default .cm-comment {
+  color: #009e9d;
+}
+
+.cm-s-default .cm-link,
+.cm-s-default .cm-quote,
+.cm-s-default .cm-strong {
+  color: #fd7741;
+}
+
+.cm-s-default .cm-url {
+  color: #bb51b8;
+}
+
+/* 隐藏全屏和源码按钮 */
+.bytemd-toolbar-right > .bytemd-toolbar-icon:nth-last-child(1) {
+  display: none;
+}
+.bytemd-toolbar-right > .bytemd-toolbar-icon:nth-last-child(2) {
+  display: none;
+}

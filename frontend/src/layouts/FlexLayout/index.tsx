@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { use100vh } from 'react-div-100vh';
 import { useWatchSize } from './sections/useWatchSize';
 import { useResizeDetector } from 'react-resize-detector';
 import { ContextProvider } from './sections/context';
 import ParentBox from './sections/ParentBox';
 import ContentBox from './sections/ContentBox';
+import { changeStore } from 'src/store/state';
 
 /**
  * 万能弹性布局器
@@ -18,10 +19,16 @@ const FlexLayout: React.FC<{}> = () => {
   });
   const { mode } = content;
   const fullScreen = ['MOBILE', 'DESKTOP'].includes(mode);
+  const isMobile = (width ?? 0) < 600;
+  useEffect(() => {
+    changeStore((d) => {
+      d.appearance.isMobile = isMobile;
+    });
+  }, [isMobile]);
   return (
     <ContextProvider value={content}>
       <ParentBox sizerRef={ref} height={height100vh || 0}>
-        <ContentBox fullScreen={fullScreen} />
+        {height100vh && <ContentBox fullScreen={fullScreen} />}
       </ParentBox>
     </ContextProvider>
   );

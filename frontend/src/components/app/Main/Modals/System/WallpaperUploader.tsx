@@ -23,8 +23,7 @@ const WallpaperUploader: React.FC<Props> = ({
     <ButtonBase
       disabled={disabled}
       onClick={() => {
-        upload().then(({ newFilename }) => {
-          const url = `/uploads/${newFilename}`;
+        upload().then(({ url }) => {
           onUploaded(url);
         });
       }}

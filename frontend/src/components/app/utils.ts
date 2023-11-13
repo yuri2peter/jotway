@@ -3,7 +3,7 @@ import { getStore } from 'src/store/state';
 
 export function calcLinkerOpenUrl(linker: Linker) {
   if (linker.article) {
-    return `/article/index.html?id=${linker.id}`;
+    return `/a/${linker.id}`;
   }
   return linker.url;
 }
