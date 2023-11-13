@@ -14,7 +14,7 @@ export const upload: Controller = (router) => {
       ctx.body = [];
       return;
     }
-    const files1 = Array.isArray(files) ? files : [files];
+    const files1: Array<any> = Array.isArray(files) ? files : [files];
     ctx.body = files1.map((file) => {
       const { newFilename, originalFilename, mimetype, size } = file;
       return {
